@@ -1,4 +1,5 @@
 from tethys_sdk.base import TethysAppBase, url_map_maker
+from tethys_sdk.app_settings import SpatialDatasetServiceSetting
 
 
 class SpatialDataViewer(TethysAppBase):
@@ -8,11 +9,11 @@ class SpatialDataViewer(TethysAppBase):
 
     name = 'Spatial Data Viewer'
     index = 'spatial_data_viewer:home'
-    icon = 'spatial_data_viewer/images/icon.gif'
+    icon = 'spatial_data_viewer/images/cuahsi_logo.png'
     package = 'spatial_data_viewer'
     root_url = 'spatial-data-viewer'
-    color = '#2980b9'
-    description = '&quot;This app allows users to preview HydroShare Geographic Feature and Raster Resources.&quot;'
+    color = '#008080'
+    description = 'This app allows users to preview HydroShare Geographic Feature and Raster Resources.'
     tags = ''
     enable_feedback = False
     feedback_emails = []
@@ -32,3 +33,24 @@ class SpatialDataViewer(TethysAppBase):
         )
 
         return url_maps
+
+    def spatial_dataset_service_settings(self):
+        """
+        Defines spatial dataset service settings
+        """
+        sds_settings = (
+            SpatialDatasetServiceSetting(
+                name='hs-apps-dev_geoserver',
+                description='GeoServer to be used for temporarily mounting user lcoal data.',
+                engine=SpatialDatasetServiceSetting.GEOSERVER,
+                required=True,
+            ),
+            SpatialDatasetServiceSetting(
+                name='hydroshare_geoserver',
+                description='GeoServer used by HydroShare to publish resources.',
+                engine=SpatialDatasetServiceSetting.GEOSERVER,
+                required=True,
+            ),
+        )
+
+        return sds_settings
